@@ -1,0 +1,11 @@
+---
+# tasks file for PostgreSQL
+
+- name: Unexpected OS
+  debug: msg="OS Family {{ ansible_os_family }} {{ ansible_architecture }} is not supported" fail=yes
+  when: not ansible_os_family == "RedHat" or not ansible_architecture == "x86_64"
+
+- name: Install with Yum
+  include: RedHat.yml
+  when: ansible_os_family == "RedHat" or ansible_os_family == "Centos" and ansible_architecture == "x86_64"
+

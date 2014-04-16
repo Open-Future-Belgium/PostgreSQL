@@ -1,0 +1,10 @@
+---
+# RedHat tasks file for PostgreSQL
+- name: Install libselinux if needed
+  yum: name=libselinux-python state=present
+  when: ansible_selinux == false
+
+- include: install.yml
+- include: configure.yml
+- include: databases.yml
+- include: users.yml
