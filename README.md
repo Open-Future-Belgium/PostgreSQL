@@ -6,7 +6,7 @@ Ansible role which installs and configures PostgreSQL, extensions, databases and
 Requirements
 ------------
 
-None
+RHEL or Centos 6.x
 
 
 Role Variables
