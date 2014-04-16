@@ -50,6 +50,7 @@ No other roles are needed.
 
 Example Playbook
 -------------------------
+```yaml
 
 # file: localrepo.yml
 - hosts: vagrant
@@ -58,6 +59,7 @@ Example Playbook
   sudo_user: root
   roles:
     - PostgreSQL
+```
 
 License
 -------
