@@ -11,7 +11,7 @@ None
 
 Role Variables
 --------------
-
+```yaml
 # Basic settings
 postgresql_version: 9.3
 postgresql_encoding: 'UTF-8'
@@ -39,7 +39,7 @@ postgresql_user_privileges:
   - name: john         # user name
     db: foobar         # database
     priv: "ALL"        # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
-
+```
 
 Dependencies
 ------------
@@ -48,7 +48,7 @@ No other roles are needed.
 
 Example Playbook
 -------------------------
-
+```yaml
 # file: localrepo.yml
 - hosts: vagrant
   user: vagrant
@@ -56,6 +56,7 @@ Example Playbook
   sudo_user: root
   roles:
     - PostgreSQL
+```
 
 License
 -------
