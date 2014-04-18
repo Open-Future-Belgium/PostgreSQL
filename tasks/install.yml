@@ -13,4 +13,3 @@
   with_items:
     - postgresql{{ postgresql_version|replace('.', '') }}-server
     - postgresql{{ postgresql_version|replace('.', '') }}-contrib
-

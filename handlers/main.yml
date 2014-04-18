@@ -1,4 +1,8 @@
 ---
 # handlers file for PostgreSQL
+
 - name: restart postgresql
-  service: name=postgresql-{{ postgresql_version }} state=restarted
+  service: name=postgresql-{{postgresql_version}} state=restarted
+
+- name: start postgresql
+  service: name=postgresql-{{postgresql_version}} state=started

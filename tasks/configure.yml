@@ -10,11 +10,16 @@
 
 - name: Config | Reset the cluster - create a new one (with specified encoding and locale)
   command: service postgresql-{{ postgresql_version }} initdb {{postgresql_cluster_name}}
-  notify: restart postgresql 
+  notify: restart postgresql
   when: postgresql_cluster_reset
 
 - name: Initialise Postgresql Database
   command: service postgresql-{{ postgresql_version }} initdb {{postgresql_cluster_name}}
+
+- name: Ensure PostgreSQL is running
+  service: name=postgresql-{{ postgresql_version }} state=started enabled=yes
+  notify:
+    - restart postgresql
 
 - name: Configure | Update configuration - (pg_hba.conf)
   template:
@@ -23,8 +28,6 @@
     owner: "{{postgresql_admin_user}}"
     group: "{{postgresql_admin_user}}"
     mode: 0640
-  notify:
-    - restart postgresql
 
 - name: Configure | Update configuration - (postgresql.conf)
   template:
@@ -33,6 +36,8 @@
     owner: "{{postgresql_admin_user}}"
     group: "{{postgresql_admin_user}}"
     mode: 0640
-  notify:
-    - restart postgresql
+
+- name: Reload The PostgreSQL Configuration
+  command: service postgresql-{{ postgresql_version }} restart
+
 

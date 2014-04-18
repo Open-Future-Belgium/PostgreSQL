@@ -6,13 +6,12 @@ Ansible role which installs and configures PostgreSQL, extensions, databases and
 Requirements
 ------------
 
-RHEL or Centos 6.x
+None
 
 
 Role Variables
 --------------
 
-```yaml
 # Basic settings
 postgresql_version: 9.3
 postgresql_encoding: 'UTF-8'
@@ -40,7 +39,6 @@ postgresql_user_privileges:
   - name: john         # user name
     db: foobar         # database
     priv: "ALL"        # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
-```
 
 
 Dependencies
@@ -50,7 +48,6 @@ No other roles are needed.
 
 Example Playbook
 -------------------------
-```yaml
 
 # file: localrepo.yml
 - hosts: vagrant
@@ -59,7 +56,6 @@ Example Playbook
   sudo_user: root
   roles:
     - PostgreSQL
-```
 
 License
 -------
@@ -73,6 +69,4 @@ Author Information
 * patrik( at )open-future.be
 * [www.open-future.be](http://www.open-future.be)
 * Role based on Galaxy Ansibles.postgresql role for Debian
-* (https://github.com/Ansibles/postgresql)
 
-=======

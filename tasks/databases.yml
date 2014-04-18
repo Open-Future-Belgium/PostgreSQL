@@ -1,6 +1,6 @@
 # Databases config file for PostgreSQL
 
-- name: PostgreSQL | Make sure the PostgreSQL databases are present
+- name: Databases | Make sure the PostgreSQL databases are present
   postgresql_db:
     name: "{{ item.name }}"
     encoding: "{{postgresql_encoding}}"
@@ -11,7 +11,7 @@
   with_items: postgresql_databases
   when: postgresql_databases|length > 0
 
-- name: PostgreSQL | Add hstore to the databases with the requirement
+- name: Databases | Add hstore to the databases with the requirement
   sudo: yes
   sudo_user: "{{postgresql_admin_user}}"
   shell: "psql {{item.name}} -c 'CREATE EXTENSION IF NOT EXISTS hstore;"
