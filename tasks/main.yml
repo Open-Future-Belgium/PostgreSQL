@@ -7,5 +7,8 @@
 
 - name: Install with Yum
   include: RedHat.yml
-  when: ansible_os_family == "RedHat" or ansible_os_family == "Centos" and ansible_architecture == "x86_64"
+  when: (ansible_os_family == "RedHat" or ansible_os_family == "Centos") and ansible_architecture == "x86_64" and ansible_distribution != "Amazon"
 
+- name: Install on Amazon Linux
+  include: Amazon.yml
+  when: ansible_distribution == "Amazon"

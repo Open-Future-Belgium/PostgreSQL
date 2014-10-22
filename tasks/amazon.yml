@@ -1,0 +1,13 @@
+# Amazon Linux tasks file for PostgreSQL
+# Tested against Amazon Linux 2014.09 - http://aws.amazon.com/amazon-linux-ami/2014.09-release-notes/
+# which gives the postgesql service a different name from CentOS 6.x / RedHat 6.x
+# this is handled by the join_char variable.
+
+- name: Install libselinux if needed
+  yum: name=libselinux-python state=present
+  when: ansible_selinux == false
+
+- include: install.yml
+- include: configure.yml
+- include: databases.yml
+- include: users.yml

@@ -1,7 +1,7 @@
 # Config file for PostgreSQL
 
 - name: Config | Stop the Cluster 
-  command: service postgresql-{{ postgresql_version }} stop
+  command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} stop
   when: postgresql_cluster_reset
 
 - name: Config | Reset the cluster - drop the existing one
@@ -9,15 +9,20 @@
   when: postgresql_cluster_reset
 
 - name: Config | Reset the cluster - create a new one (with specified encoding and locale)
-  command: service postgresql-{{ postgresql_version }} initdb {{postgresql_cluster_name}}
+  command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} initdb {{postgresql_cluster_name}}
   notify: restart postgresql
   when: postgresql_cluster_reset
 
-- name: Initialise Postgresql Database
-  command: service postgresql-{{ postgresql_version }} initdb {{postgresql_cluster_name}}
+- name: Check whether the data directory is already there
+  stat: path={{ postgresql_data_directory }}/base
+  register: data_dir
+
+- name: Initialise Postgresql Database if it is not
+  command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} initdb {{postgresql_cluster_name}}
+  when: data_dir.stat.exists == false
 
 - name: Ensure PostgreSQL is running
-  service: name=postgresql-{{ postgresql_version }} state=started enabled=yes
+  service: name=postgresql{{ join_char | default("-")}}{{ postgresql_version }} state=started enabled=yes
   notify:
     - restart postgresql
 
@@ -38,6 +43,6 @@
     mode: 0640
 
 - name: Reload The PostgreSQL Configuration
-  command: service postgresql-{{ postgresql_version }} restart
+  command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} restart
 
 
