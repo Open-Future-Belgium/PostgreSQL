@@ -6,7 +6,7 @@ Ansible role which installs and configures PostgreSQL, extensions, databases and
 Requirements
 ------------
 
-CentOS 6.x / RedHat 6.x
+CentOS 6.x / RedHat 6.x / Amazon Linux 2014.09
 
 
 Role Variables
@@ -56,6 +56,23 @@ Example Playbook
   sudo_user: root
   roles:
     - PostgreSQL
+```
+
+Amazon Linux Example Playbook
+-----------------------------
+```yaml
+- hosts: tag_your_tag_name
+  remote_user: ec2-user
+  sudo: yes
+  roles:
+    - { role: PostgreSQL,
+        postgresql_version: 93,
+        postgresql_data_directory: /var/lib/pgsql93/data,
+        postgresql_conf_directory: /var/lib/pgsql93/data,
+        postgresql_external_pid_file: "/var/run/postgresql/{{postgresql_version}}-{{postgresql_cluster_name}}.pid",
+        postgresql_logging_collector: on,
+        postgresql_unix_socket_directories: [ /var/run/postgresql ],
+        join_char: "" } # This is used to deal with Amazon's naming convention for the postgreSQL service
 ```
 
 License
