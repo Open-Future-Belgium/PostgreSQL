@@ -6,7 +6,7 @@ Ansible role which installs and configures PostgreSQL, extensions, databases and
 Requirements
 ------------
 
-CentOS 6.x / RedHat 6.x / Amazon Linux 2014.09
+CentOS/Rhel 6.x & 7.x / Amazon Linux 2014.09
 
 
 Role Variables
@@ -86,4 +86,4 @@ Author Information
 * Patrik Uytterhoeven
 * patrik( at )open-future.be
 * [www.open-future.be](http://www.open-future.be)
-* Role based on Galaxy Ansibles.postgresql role for Debian 
+* Role based on Galaxy Ansibles.postgresql role for Debian
