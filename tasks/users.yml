@@ -6,6 +6,7 @@
     password: "{{item.pass | default('pass')}}"
     state: present
     login_host: "{{item.host | default('localhost')}}"
+    role_attr_flags: "{{item.role_attr_flags | default('LOGIN')}}"
   with_items: postgresql_users
   when: postgresql_users|length > 0
 
