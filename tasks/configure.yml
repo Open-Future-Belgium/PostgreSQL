@@ -37,6 +37,8 @@
     owner: "{{postgresql_admin_user}}"
     group: "{{postgresql_admin_user}}"
     mode: 0640
+  notify:
+    - restart postgresql
 
 - name: Configure | Update configuration - (postgresql.conf)
   template:
@@ -45,8 +47,5 @@
     owner: "{{postgresql_admin_user}}"
     group: "{{postgresql_admin_user}}"
     mode: 0640
-
-- name: Reload The PostgreSQL Configuration
-  command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} restart
-
-
+  notify:
+    - restart postgresql
