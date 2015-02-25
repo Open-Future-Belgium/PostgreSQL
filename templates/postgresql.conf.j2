@@ -79,7 +79,7 @@ db_user_namespace       = {{'on' if postgresql_db_user_namespace else 'off'}}
 
 # Kerberos and GSSAPI
 krb_server_keyfile = '{{postgresql_krb_server_keyfile}}'
-krb_srvname        = '{{postgresql_krb_srvname}}'
+{% if postgresql_version <= 9.3 %}krb_srvname        = '{{postgresql_krb_srvname}}'{% endif %}
 krb_caseins_users  = {{'on' if postgresql_db_user_namespace else 'off'}}
 
 # TCP Keepalives, 0 selects the system default
