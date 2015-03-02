@@ -49,3 +49,6 @@
     mode: 0640
   notify:
     - restart postgresql
+
+- name: Configure | DB restart should happen now if required
+  meta: flush_handlers
