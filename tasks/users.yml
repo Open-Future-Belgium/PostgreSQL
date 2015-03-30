@@ -9,6 +9,7 @@
     role_attr_flags: "{{item.role_attr_flags | default('LOGIN')}}"
   with_items: postgresql_users
   when: postgresql_users|length > 0
+  no_log: True
 
 - name: PostgreSQL | Update the user privileges
   postgresql_user:
@@ -19,3 +20,4 @@
     login_host: "{{item.host | default('localhost')}}"
   with_items: postgresql_user_privileges
   when: postgresql_users|length > 0
+  no_log: True
