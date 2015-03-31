@@ -10,6 +10,7 @@
     encrypted: "{{item.encrypted | default('no')}}"
   with_items: postgresql_users
   when: postgresql_users|length > 0
+  no_log: True
 
 - name: PostgreSQL | Update the user privileges
   postgresql_user:
@@ -21,3 +22,4 @@
     encrypted: "{{item.encrypted | default('no')}}"
   with_items: postgresql_user_privileges
   when: postgresql_users|length > 0
+  no_log: True
