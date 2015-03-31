@@ -7,6 +7,7 @@
     state: present
     login_host: "{{item.host | default('localhost')}}"
     role_attr_flags: "{{item.role_attr_flags | default('LOGIN')}}"
+    encrypted: "{{item.encrypted | default('no')}}"
   with_items: postgresql_users
   when: postgresql_users|length > 0
 
@@ -17,5 +18,6 @@
     priv: "{{item.priv | default('ALL')}}"
     state: present
     login_host: "{{item.host | default('localhost')}}"
+    encrypted: "{{item.encrypted | default('no')}}"
   with_items: postgresql_user_privileges
   when: postgresql_users|length > 0
