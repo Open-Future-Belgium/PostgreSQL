@@ -1,10 +1,14 @@
 # install file for PostgreSQL
 
 - name: Install | Make sure dependencies are installed
-  yum: name={{ item }} state=present
-  with_items:
-    - python-psycopg2
-    - python-passlib
+  yum: name=python-psycopg2 state=present
+
+
+  # don't fail if python-passlib can't be installed
+  # e.g. if a RHEL server doesn't have access to EPEL repos
+- name: Install | Add python-passlib if available
+  yum: name=python-passlib state=present
+  ignore_errors: True
 
 
 - name: Install | Add PostgreSQL repository
