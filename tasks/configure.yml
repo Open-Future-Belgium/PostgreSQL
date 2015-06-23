@@ -8,6 +8,10 @@
   shell: rm -rf {{ postgresql_conf_directory }}
   when: postgresql_cluster_reset
 
+- name: Config | Ensure the logging directory exists
+  file: state=directory dest="{{postgresql_log_directory}}" owner="{{postgresql_admin_user}}" group="{{postgresql_admin_user}}"
+  when: 'postgresql_log_directory.startswith("/")'
+
 - name: Config | Reset the cluster - create a new one (with specified encoding and locale)
   command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} initdb {{postgresql_cluster_name}}
   notify: restart postgresql
