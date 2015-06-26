@@ -24,7 +24,7 @@
 {{connection.type}}  {{connection.database}}  {{connection.user}}  {{connection.address}}  {{connection.method}}  {{connection.options|default("")}}
 {% endfor %}
 
-# Passwored hosts
+# Password hosts
 {% for host in postgresql_pg_hba_passwd_hosts %}
 host  all  all  {{host}}  password
 {% endfor %}
