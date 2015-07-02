@@ -18,22 +18,22 @@ postgresql_cluster_name: "data"
 postgresql_cluster_reset: false          # true or false
 
 
-# List of database to be created (optional)
-postgresql_databases: #[]                # Remove [] When adding a database and uncomment name, hstore
-              - name:
-                hstore: yes              # flag to install the hstore extensions on this database (yes/no)
+# List of databases to be created (optional)
+postgresql_databases: []                # Override when needed, usage as shown below
+        #      - name: dbname           # Database
+        #        hstore: yes            # flag to install the hstore extensions on this database (yes/no)
 
 # List of users to be created (optional)
-postgresql_users: #[]                    # Remove [] When adding a database and uncomment name, pass, encrypted
-              - name:
-                pass:
-                encrypted: no            # Is password already encrypted (yes/no)
+postgresql_users: []                    # Override when needed, usage as shown below
+        #      - name: dbuser           # Username
+        #        pass: passw0rd         # User password
+        #        encrypted: no          # Is password already encrypted (yes/no)
 
 # List of user privileges to be applied (optional)
-postgresql_user_privileges: #[]          # Remove [] When adding a database and uncomment name, db, priv
-              - name:                    # Username
-                db:                      # Database
-                priv: "ALL"              # Privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
+postgresql_user_privileges: []          # Override when needed, usage as shown below
+        #      - name: dbuser           # Username
+        #        db: dbname             # Database
+        #        priv: "ALL"            # Privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
 
 # pg_hba.conf
 postgresql_pg_hba_default:
