@@ -1,5 +1,4 @@
 # Config file for PostgreSQL
-
 - name: Config | Stop the Cluster
   command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} stop
   when: postgresql_cluster_reset
@@ -7,6 +6,16 @@
 - name: Config | Reset the cluster - drop the existing one
   shell: rm -rf {{ postgresql_conf_directory }}
   when: postgresql_cluster_reset
+
+- name: Install service file on Centos/Rhel 7
+  template: src="postgresql.service.j2" dest="/etc/systemd/system/postgresql{{ join_char | default("-")}}{{ postgresql_version }}.service"
+  when: ansible_distribution_major_version == '7'
+  register: servicefile
+
+  # Can't use flush_handlers here as it might trigger a postgresql restart too early
+- name: reload systemctl if service file changed
+  command: systemctl daemon-reload
+  when: servicefile.changed
 
 - name: Config | Reset the cluster - create a new one (with specified encoding and locale)
   command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} initdb {{postgresql_cluster_name}}
