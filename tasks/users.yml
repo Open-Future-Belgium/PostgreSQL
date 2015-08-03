@@ -12,14 +12,25 @@
   when: postgresql_users|length > 0
   no_log: True
 
-- name: PostgreSQL | Update the user privileges
+- name: PostgreSQL | Update the users database privileges
   postgresql_user:
     name: "{{item.name}}"
     db: "{{item.db}}"
     priv: "{{item.priv | default('ALL')}}"
     state: present
     login_host: "{{item.host | default('localhost')}}"
-    encrypted: "{{item.encrypted | default('no')}}"
   with_items: postgresql_user_privileges
-  when: postgresql_users|length > 0
-  no_log: True
+  when: postgresql_user_privileges|length > 0
+
+- name: PostgreSQL | Update the users object privileges
+  postgresql_privs:
+    role: "{{item.name}}"
+    db: "{{item.db}}"
+    priv: "{{item.priv | default('ALL')}}"
+    state: present
+    schema: "{{item.schema|default('public')}}"
+    objs: "{{item.objs|default('')}}"
+    type: "{{item.type|default('')}}"
+    login_host: "{{item.host | default('localhost')}}"
+  with_items: postgresql_user_object_privileges
+  when: postgresql_user_object_privileges|length > 0

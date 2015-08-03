@@ -10,7 +10,7 @@ CentOS/Rhel 6.x & 7.x / Amazon Linux 2014.09
 
 Updated
 -------
-19/7/2015
+03/08/2015
 
 Role Variables
 --------------
@@ -42,7 +42,23 @@ postgresql_user_privileges:
   - name: john         # user name
     db: foobar         # database
     priv: "ALL"        # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
+                       #   N.B. ALL only provides all *database* privileges, but
+                       #   no table privileges
+
+# List of object privileges to be applied
+postgresql_user_object_privileges:
+  - name: john             # user name
+    db: foobar             # database
+    type: table            # type of db object on which to set privilege
+    priv: ALL              # list of privileges (e.g. INSERT,SELECT)
+    objs: 'ALL_IN_SCHEMA'  # list of db objects on which to set privilege
+  - name: john             # user name
+    db: foobar             # database
+    type: sequence         # type of db object on which to set privilege
+    priv: ALL              # list of privileges (e.g. INSERT,SELECT)
+    objs: 'ALL_IN_SCHEMA'  # list of db objects on which to set privilege
 ```
+
 
 Dependencies
 ------------

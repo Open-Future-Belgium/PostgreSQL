@@ -35,6 +35,14 @@ postgresql_user_privileges: []          # Override when needed, usage as shown b
         #        db: dbname             # Database
         #        priv: "ALL"            # Privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
 
+# List of user object privileges to be applied (optional)
+postgresql_user_object_privileges: []   # Remove [] When adding a database and uncomment name, db, priv
+#              - name: otheruser        # Username
+#                db: dbname             # Database
+#                type: table            # type of db object on which to set privilege
+#                priv: ALL              # list of privileges (e.g. INSERT,SELECT)
+#                objs: 'ALL_IN_SCHEMA'  # list of db objects on which to set privilege
+
 # pg_hba.conf
 postgresql_pg_hba_default:
   - { type: local, database: all, user: '{{ postgresql_admin_user }}', address: '', method: '{{ socket_postgresql_default_auth_method }}', comment: '' }
