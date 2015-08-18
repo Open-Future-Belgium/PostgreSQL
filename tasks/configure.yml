@@ -39,7 +39,7 @@
   register: data_dir
 
 - name: Initialise Postgresql Database if it is not
-  command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} initdb {{postgresql_cluster_name}}
+  command: service postgresql{{ join_char | default("-")}}{{ postgresql_version }} initdb
   when: data_dir.stat.exists == false and ansible_distribution_major_version == '6'
 
 - name: Initialise Postgresql Database on Centos/Rhel 7 if it is not
