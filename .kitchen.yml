@@ -1,0 +1,41 @@
+---
+driver:
+  name: vagrant
+  network:
+    - ["public_network"]
+
+provisioner:
+  name: ansible_playbook
+  playbook: tests/test.yml
+  ansible_diff: true
+  hosts: localhost
+  require_ruby_for_busser: false
+
+platforms:
+  - name: centos-7.1
+    driver_config:
+      box: chef/centos-7.1
+    provisioner:
+      ansible_yum_repo: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+
+  - name: centos-6.6
+    driver_config:
+      box: chef/centos-6.6
+    provisioner:
+      ansible_yum_repo: "http://mirror.logol.ru/epel/6/x86_64/epel-release-6-8.noarch.rpm"
+
+suites:
+  - name: pg-9.3-tmp
+    provisioner:
+      attributes:
+        extra_vars:
+            postgresql_unix_socket_directories:
+              - /tmp
+
+  - name: pg-9.4-tmp
+    provisioner:
+      attributes:
+        extra_vars:
+            postgresql_version: 9.4
+            postgresql_unix_socket_directories:
+              - /tmp
