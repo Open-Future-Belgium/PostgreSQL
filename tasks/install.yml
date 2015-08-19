@@ -1,5 +1,48 @@
 # install file for PostgreSQL
 
+- name: Install | Exclude packages from main repo on Amazon distro
+  ini_file: dest=/etc/yum.repos.d/amzn-main.repo
+        section=amzn-main
+        option=exclude
+        value=postgresql*
+        backup=yes
+  when: ansible_distribution == 'Amazon'
+
+- name: Install | Exclude packages from updates repo on Amazon distro
+  ini_file: dest=/etc/yum.repos.d/amzn-updates.repo
+        section=amzn-updates
+        option=exclude
+        value=postgresql*
+        backup=yes
+  when: ansible_distribution == 'Amazon'
+
+- name: Install | Exclude packages from base section on CentOS
+  ini_file: dest=/etc/yum.repos.d/CentOS-Base.repo
+        section=base
+        option=exclude
+        value=postgresql*
+        backup=yes
+  when: ansible_distribution == 'CentOS'
+
+- name: Install | Exclude packages from updates section on CentOS
+  ini_file: dest=/etc/yum.repos.d/CentOS-Base.repo
+        section=updates
+        option=exclude
+        value=postgresql*
+        backup=yes
+  when: ansible_distribution == 'CentOS'
+
+- name: Install | Exclude packages from RHEL repository
+  ini_file: dest=/etc/yum/pluginconf.d/rhnplugin.conf
+        section=main
+        option=exclude
+        value=postgresql*
+        backup=yes
+  when: ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Install | Add PostgreSQL repository
+  yum: name={{ pgsql_repo }} state=present
+
 - name: Install | Make sure dependencies are installed
   yum: name=python-psycopg2 state=present
 
@@ -9,10 +52,6 @@
 - name: Install | Add python-passlib if available
   yum: name=python-passlib state=present
   ignore_errors: True
-
-
-- name: Install | Add PostgreSQL repository
-  yum: name={{ pgsql_repo }} state=present
 
 
 - name: Install postgresql db packages
