@@ -10,7 +10,7 @@ CentOS/Rhel 6.x & 7.x / Amazon Linux 2014.09
 
 Updated
 -------
-03/08/2015
+20/08/2015
 
 Role Variables
 --------------
@@ -58,6 +58,15 @@ postgresql_user_object_privileges:
     priv: ALL              # list of privileges (e.g. INSERT,SELECT)
     objs: 'ALL_IN_SCHEMA'  # list of db objects on which to set privilege
 ```
+
+Kitchen Testing
+---------------
+Install test-kitchen: gem install test-kitchen
+run : kitchen setup all -p -c 4
+
+This will provision 4vm's, 2 with 9.3 and 2 with 9.4 on Centos 6.6 and 7.1
+
+
 
 
 Dependencies
