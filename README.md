@@ -10,7 +10,7 @@ CentOS/Rhel 6.x & 7.x / Amazon Linux 2014.09
 
 Updated
 -------
-20/08/2015
+24/08/2015
 
 Role Variables
 --------------
