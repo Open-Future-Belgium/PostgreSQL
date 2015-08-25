@@ -1,0 +1,24 @@
+# Exclude postgresql* on CentOS
+
+- name: Install | CentOS | Create symlink for repo fact gathering
+  file: src=/etc/yum.repos.d/CentOS-Base.repo dest=/etc/ansible/facts.d/baserepo.fact state=link
+  register: repo_fact_file
+
+- name: Install | CentOS | Gather repository facts
+  setup: filter=ansible_local
+  when: repo_fact_file|changed
+
+- name: Install | CentOS | Exclude packages, base section
+  ini_file: dest=/etc/yum.repos.d/CentOS-Base.repo
+        section=base
+        option=exclude
+        value="{{ (ansible_local.baserepo.base.exclude | default("") | replace("postgresql*", "") | trim ~ " postgresql* ") | trim }}"
+        backup=yes
+
+- name: Install | CentOS | Exclude packages, updates section
+  ini_file: dest=/etc/yum.repos.d/CentOS-Base.repo
+        section=updates
+        option=exclude
+        value="{{ (ansible_local.baserepo.updates.exclude | default("") | replace("postgresql*", "") | trim ~ " postgresql* ") | trim }}"
+        backup=yes
+

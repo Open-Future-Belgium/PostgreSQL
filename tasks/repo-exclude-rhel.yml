@@ -1,0 +1,17 @@
+# Exclude postgresql* on RHEL
+
+- name: Install | RHEL | Create symlink for repo fact gathering
+  file: src=/etc/yum/pluginconf.d/rhnplugin.conf dest=/etc/ansible/facts.d/rhnplugin.fact state=link
+  register: repo_fact_file
+
+- name: Install | RHEL | Gather repository facts
+  setup: filter=ansible_local
+  when: repo_fact_file|changed
+
+- name: Install | RHEL | Exclude packages
+  ini_file: dest=/etc/yum/pluginconf.d/rhnplugin.conf
+        section=main
+        option=exclude
+        value="{{ (ansible_local.rhnplugin.main.exclude | default("") | replace("postgresql*", "") | trim ~ " postgresql* ") | trim }}"
+        backup=yes
+
