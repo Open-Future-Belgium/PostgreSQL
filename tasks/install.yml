@@ -1,51 +1,30 @@
 # install file for PostgreSQL
 
-- name: Install | Exclude packages from main repo on Amazon distro
-  ini_file: dest=/etc/yum.repos.d/amzn-main.repo
-        section=amzn-main
-        option=exclude
-        value=postgresql*
-        backup=yes
+- name: Install | Create /etc/ansible/facts.d for repo fact gathering 
+  file: path=/etc/ansible/facts.d state=directory mode=0755
+
+- name: Install | Exclude packages on Amazon distro
+  include: repo-exclude-amazon.yml
   when: ansible_distribution == 'Amazon'
 
-- name: Install | Exclude packages from updates repo on Amazon distro
-  ini_file: dest=/etc/yum.repos.d/amzn-updates.repo
-        section=amzn-updates
-        option=exclude
-        value=postgresql*
-        backup=yes
-  when: ansible_distribution == 'Amazon'
-
-- name: Install | Exclude packages from base section on CentOS
-  ini_file: dest=/etc/yum.repos.d/CentOS-Base.repo
-        section=base
-        option=exclude
-        value=postgresql*
-        backup=yes
+- name: Install | Exclude packages on CentOS distro
+  include: repo-exclude-centos.yml
   when: ansible_distribution == 'CentOS'
 
-- name: Install | Exclude packages from updates section on CentOS
-  ini_file: dest=/etc/yum.repos.d/CentOS-Base.repo
-        section=updates
-        option=exclude
-        value=postgresql*
-        backup=yes
-  when: ansible_distribution == 'CentOS'
-
-- name: Install | Exclude packages from RHEL repository
-  ini_file: dest=/etc/yum/pluginconf.d/rhnplugin.conf
-        section=main
-        option=exclude
-        value=postgresql*
-        backup=yes
-  when: ansible_distribution == 'Red Hat Enterprise Linux'
+- name: Install | Exclude packages on RHEL distro
+  include: repo-exclude-rhel.yml
+  when: ansible_distribution == 'RedHat'
 
 - name: Install | Add PostgreSQL repository
   yum: name={{ pgsql_repo }} state=present
 
-- name: Install | Make sure dependencies are installed
+- name: Install | Make sure CentOS & RHEL dependencies are installed
   yum: name=python-psycopg2 state=present
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
+- name: Install | Make sure Amazon Linux dependencies are installed
+  yum: name=python27-psycopg2 state=present
+  when: ansible_distribution == 'Amazon'
 
   # don't fail if python-passlib can't be installed
   # e.g. if a RHEL server doesn't have access to EPEL repos

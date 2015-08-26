@@ -1,0 +1,28 @@
+# Exclude postgresql* on Amazon Linux
+
+- name: Install | Amazon | Create symlink for main repo fact gathering
+  file: src=/etc/yum.repos.d/amzn-main.repo dest=/etc/ansible/facts.d/amznmain.fact state=link
+  register: repo_fact_file
+
+- name: Install | Amazon | Create symlink for updates repo fact gathering
+  file: src=/etc/yum.repos.d/amzn-updates.repo dest=/etc/ansible/facts.d/amznupdates.fact state=link
+  register: repo2_fact_file
+
+- name: Install | Amazon | Gather repository facts
+  setup: filter=ansible_local
+  when: repo_fact_file|changed or repo2_fact_file|changed
+
+- name: Install | Amazon | Exclude packages from main repo
+  ini_file: dest=/etc/yum.repos.d/amzn-main.repo
+        section=amzn-main
+        option=exclude
+        value="{{ (ansible_local['amznmain']['amzn-main']['exclude'] | default("") | replace("postgresql*", "") | trim ~ " postgresql*") | trim }}"
+        backup=yes
+
+- name: Install | Amazon | Exclude packages from updates repo
+  ini_file: dest=/etc/yum.repos.d/amzn-updates.repo
+        section=amzn-updates
+        option=exclude
+        value="{{ (ansible_local['amznupdates']['amzn-updates']['exclude'] | default("") | replace("postgresql*", "") | trim ~ " postgresql* ") | trim }}"
+        backup=yes
+
