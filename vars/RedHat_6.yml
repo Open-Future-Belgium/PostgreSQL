@@ -1,0 +1,4 @@
+---
+
+postgresql_unix_socket_directories:
+  - /tmp
