@@ -83,9 +83,7 @@ postgresql_port: 5432
 postgresql_max_connections: 100
 postgresql_superuser_reserved_connections: 3
 
-postgresql_unix_socket_directories:
-  - /tmp
-
+postgresql_unix_socket_directories: '/tmp'
 postgresql_unix_socket_group: ''
 postgresql_unix_socket_permissions: '0777' # begin with 0 to use octal notation
 

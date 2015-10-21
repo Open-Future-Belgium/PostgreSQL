@@ -50,6 +50,9 @@
   command: /usr/pgsql-{{ postgresql_version }}/bin/postgresql{{ postgresql_version|replace('.','') }}-setup initdb
   when: data_dir.stat.exists == false and ansible_distribution_major_version == '7'
 
+- name: create pid file
+  file: path=/var/run/{{postgresql_version}}-{{postgresql_cluster_name}}.pid state=touch mode=0644 owner=postgres group=postgres
+
 - name: Configure | Update configuration - (pg_hba.conf)
   template:
     src: pg_hba.conf.j2

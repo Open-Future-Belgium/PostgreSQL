@@ -1,4 +1,13 @@
 ---
 - hosts: localhost
+  vars:
+    postgresql_databases:              # Override when needed, usage as shown below
+              - name: testdb           # Database
+                hstore: yes            # flag to install the hstore extensions on this database (yes/no)
+
+    postgresql_users:                  # Override when needed, usage as shown below
+              - name: dbuser           # Username
+                pass: passw0rd         # User password
+                encrypted: no          # Is password already encrypted (yes/no)
   roles:
     - { role: PostgreSQL }

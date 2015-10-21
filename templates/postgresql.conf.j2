@@ -1,5 +1,5 @@
-# {{ ansible_managed }}
-#
+## {{ ansible_managed }}
+# test
 # -----------------------------
 # PostgreSQL configuration file
 # -----------------------------
@@ -56,7 +56,11 @@ port = {{postgresql_port}}
 max_connections = {{postgresql_max_connections}}
 superuser_reserved_connections = {{postgresql_superuser_reserved_connections}}
 
-unix_socket_directories = '{{postgresql_unix_socket_directories|join(',')}}'
+{% if postgresql_version == 9.4 and ansible_distribution_major_version == '7' %}
+unix_socket_directories = '/var/run/postgresql/'
+{% else %}
+unix_socket_directories = '{{postgresql_unix_socket_directories}}'
+{% endif %}
 unix_socket_group       = '{{postgresql_unix_socket_group}}'
 unix_socket_permissions = {{postgresql_unix_socket_permissions}}
 

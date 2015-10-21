@@ -29,13 +29,9 @@ suites:
     provisioner:
       attributes:
         extra_vars:
-            postgresql_unix_socket_directories:
-              - /tmp
 
   - name: pg-9.4-tmp
     provisioner:
       attributes:
         extra_vars:
             postgresql_version: 9.4
-            postgresql_unix_socket_directories:
-              - /tmp
