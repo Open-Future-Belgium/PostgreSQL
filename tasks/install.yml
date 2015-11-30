@@ -19,7 +19,7 @@
   yum: name={{ pgsql_repo }} state=present
 
 - name: Install | Make sure CentOS & RHEL dependencies are installed
-  yum: name=python-psycopg2 state=present
+  yum: name=python-psycopg2 state=present update_cache=yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
 - name: Install | Make sure Amazon Linux dependencies are installed
