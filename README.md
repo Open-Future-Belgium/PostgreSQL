@@ -59,15 +59,27 @@ postgresql_user_object_privileges:
     objs: 'ALL_IN_SCHEMA'  # list of db objects on which to set privilege
 ```
 
+By default, the role will install RPMs from postgresql's RPM repository.
+In some situations, this will not be desired (RPMs might be installed
+from Satellite or policy might be to only allow OS RPMs).
+
+Use the following variables to control this:
+* `postgresql_repo_manage` - set to false if you manage to use your own
+  repositories
+* `postgresql_rpm_format` - prefix for postgresql RPMs - set this to
+  e.g. `postgresql` if using standard RHEL/CentOS RPMs.
+* `postgresql_rpm_version` - use to install a specific RPM version
+
 Kitchen Testing
 ---------------
-Install test-kitchen: gem install test-kitchen
+Install test-kitchen: gem install test-kitchen kitchen-vagrant kitchen-ansible
 run : kitchen setup all -p -c 4
 
 This will provision 4vm's, 2 with 9.3 and 2 with 9.4 on Centos 6.6 and 7.1
 
-
-
+To use vagrant with libvirt, rather than VirtualBox, copy
+`.kitchen.local-libvirt.yml` to `.kitchen.local.yml`
+This only creates Centos 7.1 hosts.
 
 Dependencies
 ------------
