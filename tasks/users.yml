@@ -17,7 +17,7 @@
     name: "{{item.name}}"
     db: "{{item.db}}"
     priv: "{{item.priv | default('ALL')}}"
-    state: present
+    state: "{{item.state | default('present')}}"
     login_host: "{{item.host | default('localhost')}}"
   with_items: postgresql_user_privileges
   when: postgresql_user_privileges|length > 0
@@ -27,7 +27,7 @@
     role: "{{item.name}}"
     db: "{{item.db}}"
     priv: "{{item.priv | default('ALL')}}"
-    state: present
+    state: "{{item.state | default('present')}}"
     schema: "{{item.schema|default('public')}}"
     objs: "{{item.objs|default('')}}"
     type: "{{item.type|default('')}}"
