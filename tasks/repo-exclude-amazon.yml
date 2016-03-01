@@ -13,16 +13,21 @@
   when: repo_fact_file|changed or repo2_fact_file|changed
 
 - name: Install | Amazon | Exclude packages from main repo
-  ini_file: dest=/etc/yum.repos.d/amzn-main.repo
-        section=amzn-main
-        option=exclude
-        value="{{ (ansible_local['amznmain']['amzn-main']['exclude'] | default("") | replace("postgresql*", "") | trim ~ " postgresql*") | trim }}"
-        backup=yes
+  ini_file:
+    dest: /etc/yum.repos.d/amzn-main.repo
+    section: amzn-main
+    option: exclude
+    value: >
+      "{{ (ansible_local['amznmain']['amzn-main']['exclude'] |
+      default('') | replace('postgresql*', '') | trim ~ ' postgresql*') | trim }}"
+    backup: yes
 
 - name: Install | Amazon | Exclude packages from updates repo
-  ini_file: dest=/etc/yum.repos.d/amzn-updates.repo
-        section=amzn-updates
-        option=exclude
-        value="{{ (ansible_local['amznupdates']['amzn-updates']['exclude'] | default("") | replace("postgresql*", "") | trim ~ " postgresql* ") | trim }}"
-        backup=yes
-
+  ini_file:
+    dest: /etc/yum.repos.d/amzn-updates.repo
+    section: amzn-updates
+    option: exclude
+    value: >
+      "{{ (ansible_local['amznupdates']['amzn-updates']['exclude'] |
+      default('') | replace('postgresql*', '') | trim ~ ' postgresql* ') | trim }}"
+    backup: yes
