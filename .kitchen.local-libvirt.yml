@@ -1,0 +1,13 @@
+---
+driver:
+  name: vagrant
+  provider: libvirt
+  network:
+  - [ "private_network", type: "dhcp" ]
+
+platforms:
+  - name: centos-7.1
+    driver_config:
+      box: centos/7
+    provisioner:
+      ansible_yum_repo: "http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"

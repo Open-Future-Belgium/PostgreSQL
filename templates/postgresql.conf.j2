@@ -59,7 +59,7 @@ superuser_reserved_connections = {{postgresql_superuser_reserved_connections}}
 {% if postgresql_version == 9.4 and ansible_distribution_major_version == '7' %}
 unix_socket_directories = '/var/run/postgresql/'
 {% else %}
-unix_socket_directories = '{{postgresql_unix_socket_directories}}'
+unix_socket_directories = '{{postgresql_unix_socket_directories|join(',')}}'
 {% endif %}
 unix_socket_group       = '{{postgresql_unix_socket_group}}'
 unix_socket_permissions = {{postgresql_unix_socket_permissions}}
