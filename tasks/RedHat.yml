@@ -1,6 +1,9 @@
 ---
 # RedHat tasks file for PostgreSQL
 - include: install.yml
-- include: configure.yml
-- include: databases.yml
-- include: users.yml
+
+- block:
+    - include: configure.yml
+    - include: databases.yml
+    - include: users.yml
+  when: not postgresql_setup_only_repo
