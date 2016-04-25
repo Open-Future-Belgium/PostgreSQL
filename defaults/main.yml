@@ -1,6 +1,9 @@
 ---
 # defaults file for PostgreSQL
 
+# Setup only repository
+postgresql_setup_only_repo: false
+
 # Basic settings
 postgresql_version: 9.3
 postgresql_encoding: 'UTF-8'
