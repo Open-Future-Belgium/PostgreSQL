@@ -34,6 +34,7 @@
 
 
 - name: Install postgresql db packages
+  when: not postgresql_setup_only_repo
   yum: name={{ item }} state=present
   with_items:
     - postgresql{{ postgresql_version|replace('.', '') }}-server
