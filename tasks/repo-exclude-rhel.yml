@@ -12,6 +12,6 @@
   ini_file: dest=/etc/yum/pluginconf.d/rhnplugin.conf
         section=main
         option=exclude
-        value="{{ (ansible_local.rhnplugin.main.exclude | default("") | replace("postgresql*", "") | trim ~ " postgresql* ") | trim }}"
+        value='{{ (ansible_local.rhnplugin.main.exclude | default("") | replace("postgresql*", "") | trim ~ " postgresql* ") | trim }}'
         backup=yes
 
