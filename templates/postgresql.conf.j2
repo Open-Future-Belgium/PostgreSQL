@@ -380,7 +380,11 @@ timezone                   = '{{postgresql_timezone}}'
 timezone_abbreviations     = '{{postgresql_timezone_abbreviations}}'
 
 extra_float_digits         = {{postgresql_extra_float_digits}}
-client_encoding            = {{postgresql_client_encoding}}
+{% if not postgresql_client_encoding %}
+#client_encoding = sql_ascii        # actually, defaults to database
+{% else %}
+client_encoding = {{postgresql_client_encoding}}        # actually, defaults to database
+{% endif %}
 
 lc_messages                = '{{postgresql_lc_messages}}'
 lc_monetary                = '{{postgresql_lc_monetary}}'
