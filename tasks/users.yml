@@ -8,7 +8,7 @@
     login_host: "{{item.host | default('localhost')}}"
     role_attr_flags: "{{item.role_attr_flags | default('LOGIN')}}"
     encrypted: "{{item.encrypted | default('no')}}"
-  with_items: postgresql_users
+  with_items: "{{postgresql_users}}"
   when: postgresql_users|length > 0
   no_log: True
 
@@ -19,7 +19,7 @@
     priv: "{{item.priv | default('ALL')}}"
     state: "{{item.state | default('present')}}"
     login_host: "{{item.host | default('localhost')}}"
-  with_items: postgresql_user_privileges
+  with_items: "{{postgresql_user_privileges}}"
   when: postgresql_user_privileges|length > 0
 
 - name: PostgreSQL | Update the users object privileges
@@ -32,5 +32,5 @@
     objs: "{{item.objs|default('')}}"
     type: "{{item.type|default('')}}"
     login_host: "{{item.host | default('localhost')}}"
-  with_items: postgresql_user_object_privileges
+  with_items: "{{postgresql_user_object_privileges}}"
   when: postgresql_user_object_privileges|length > 0
