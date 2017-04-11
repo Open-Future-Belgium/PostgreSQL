@@ -11,7 +11,7 @@ galaxy_info:
   # - Apache
   # - CC-BY
   license: MIT
-  min_ansible_version: 1.4
+  min_ansible_version: 1.9
   #
   # Below are all platforms currently available. Just uncomment
   # the ones that apply to your role. If you don't see your
@@ -120,4 +120,3 @@ dependencies: []
   # dependencies available via galaxy should be listed here.
   # Be sure to remove the '[]' above if you add dependencies
   # to this list.
-
