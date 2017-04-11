@@ -80,8 +80,8 @@ Example Playbook
 # file: localrepo.yml
 - hosts: vagrant
   user: vagrant
-  sudo: yes
-  sudo_user: root
+  become: yes
+  become_user: root
   roles:
     - PostgreSQL
 ```
@@ -91,7 +91,7 @@ Amazon Linux Example Playbook
 ```yaml
 - hosts: tag_your_tag_name
   remote_user: ec2-user
-  sudo: yes
+  become: yes
   roles:
     - { role: PostgreSQL,
         postgresql_version: 93,
