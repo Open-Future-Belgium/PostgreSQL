@@ -8,12 +8,12 @@
     lc_ctype: "{{postgresql_locale}}"
     template: "template0"
     state: present
-  with_items: postgresql_databases
+  with_items: "{{postgresql_databases}}"
   when: postgresql_databases|length > 0
 
 - name: Databases | Add hstore to the databases with the requirement
   become: yes
   become_user: "{{postgresql_admin_user}}"
   shell: "psql {{item.name}} -c 'CREATE EXTENSION IF NOT EXISTS hstore;'"
-  with_items: postgresql_databases
+  with_items: "{{postgresql_databases}}"
   when: "item.hstore is defined and item.hstore == 'yes'"
