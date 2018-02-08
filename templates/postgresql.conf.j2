@@ -150,7 +150,7 @@ effective_io_concurrency = {{postgresql_effective_io_concurrency}}
 wal_level = {{postgresql_wal_level}}
 fsync = {{'on' if postgresql_fsync else 'off'}}
 
-synchronous_commit = {{'on' if postgresql_synchronous_commit else 'off'}}
+synchronous_commit = {{postgresql_synchronous_commit}}
 
 wal_sync_method = {{postgresql_wal_sync_method}}
 
